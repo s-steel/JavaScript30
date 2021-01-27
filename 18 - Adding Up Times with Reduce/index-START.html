@@ -182,6 +182,39 @@
     </li>
   </ul>
 <script>
+
+// We want to add up all the times of the videos
+// First we'll use map and reduce and then we'll up just reduce
+
+  // Need to make this an array otherwise its a Nodelist
+  const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+
+  const seconds = timeNodes
+    // Create an array of all the times (from an array of list items into strings)
+    .map( node => node.dataset.time)
+    // Change the strings into array of seconds(not strings) so we can do math
+    .map(timeCode => {
+      const [mins, secs] = timeCode.split(':').map(parseFloat);
+      return (mins * 60) + secs;
+    })
+    // Total all the seconds (reduce takes in an array and returns whatever you want)
+    .reduce((total, vidSeconds) => total + vidSeconds);
+
+    let secondsLeft = seconds;
+    const hours = Math.floor(secondsLeft / 3600);
+    secondsLeft = secondsLeft % 3600;
+
+    const mins = Math.floor(secondsLeft / 60);
+    secondsLeft = secondsLeft % 60;
+    
+    console.log(hours, mins, secondsLeft)
+
+
+// '6:10'.split(':')
+// gives you ['6', '10']
+// '6:10'.split(':').map(parseFloat) this maps through array and converts them all to Floats
+
 </script>
 </body>
 </html>
+
